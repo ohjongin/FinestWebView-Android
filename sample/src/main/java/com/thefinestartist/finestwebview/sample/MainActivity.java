@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+
 import com.thefinestartist.finestwebview.FinestWebView;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
 
   public void onClick(View view) {
     if (view.getId() == R.id.defaultTheme) {
-      new FinestWebView.Builder(this).titleDefault("The Finest Artist")
+      new FinestWebView.Builder(this)
+              .titleDefault("The Finest Artist")
+              .titleGravity(Gravity.LEFT)
           .show("http://thefinestartist.com");
       ////                    .toolbarScrollFlags(0)
       //                    .webViewJavaScriptEnabled(true)
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
       //            startActivity(intent);
       new FinestWebView.Builder(this).theme(R.style.RedTheme)
           .titleDefault("Bless This Stuff")
+              .titleGravity(Gravity.CENTER)
           .webViewBuiltInZoomControls(true)
           .webViewDisplayZoomControls(true)
           .dividerHeight(0)

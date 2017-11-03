@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-  <RelativeLayout
+  <LinearLayout
       android:id="@+id/toolbarLayout"
       android:layout_width="match_parent"
       android:layout_height="@dimen/toolbarHeight"
       android:minHeight="@dimen/toolbarHeight"
+      android:orientation="horizontal"
       >
 
     <android.support.v7.widget.AppCompatImageButton
@@ -35,12 +37,11 @@
 
     <LinearLayout
         android:id="@id/centerLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
+        android:layout_weight="1"
+        android:gravity="left|center_vertical"
+        android:orientation="vertical">
 
       <TextView
           android:id="@+id/title"
@@ -54,6 +55,7 @@
           android:singleLine="true"
           android:textColor="@color/finestBlack"
           android:textSize="@dimen/defaultTitleSize"
+          tools:text="title"
           />
 
       <TextView
@@ -70,6 +72,7 @@
           android:singleLine="true"
           android:textColor="@color/finestSilver"
           android:textSize="@dimen/defaultUrlSize"
+          tools:text="http://www.wipoint.kr"
           />
     </LinearLayout>
 
@@ -92,7 +95,7 @@
         android:background="@drawable/selector_light_theme"
         android:src="@drawable/more"
         />
-  </RelativeLayout>
+  </LinearLayout>
 
   <View
       android:id="@+id/divider"

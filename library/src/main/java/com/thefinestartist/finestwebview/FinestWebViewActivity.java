@@ -43,6 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.nineoldandroids.view.ViewHelper;
 import com.thefinestartist.converters.UnitConverter;
 import com.thefinestartist.finestwebview.enums.Position;
@@ -108,6 +109,7 @@ public class FinestWebViewActivity extends AppCompatActivity
   protected float titleSize;
   protected String titleFont;
   protected int titleColor;
+  protected int titleGravity;
 
   protected boolean showUrl;
   protected float urlSize;
@@ -195,7 +197,7 @@ public class FinestWebViewActivity extends AppCompatActivity
   protected CoordinatorLayout coordinatorLayout;
   protected AppBarLayout appBar;
   protected Toolbar toolbar;
-  protected RelativeLayout toolbarLayout;
+  protected LinearLayout toolbarLayout;
   protected TextView title;
   protected TextView urlTv;
   protected AppCompatImageButton close;
@@ -318,6 +320,7 @@ public class FinestWebViewActivity extends AppCompatActivity
         : getResources().getDimension(R.dimen.defaultTitleSize);
     titleFont = builder.titleFont != null ? builder.titleFont : "Roboto-Medium.ttf";
     titleColor = builder.titleColor != null ? builder.titleColor : textColorPrimary;
+    titleGravity = builder.titleGravity != null ? builder.titleGravity : Gravity.NO_GRAVITY;
 
     showUrl = builder.showUrl != null ? builder.showUrl : true;
     urlSize = builder.urlSize != null ? builder.urlSize
@@ -436,7 +439,7 @@ public class FinestWebViewActivity extends AppCompatActivity
 
     appBar = (AppBarLayout) findViewById(R.id.appBar);
     toolbar = (Toolbar) findViewById(R.id.toolbar);
-    toolbarLayout = (RelativeLayout) findViewById(R.id.toolbarLayout);
+    toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
 
     title = (TextView) findViewById(R.id.title);
     urlTv = (TextView) findViewById(R.id.url);
@@ -1085,15 +1088,20 @@ public class FinestWebViewActivity extends AppCompatActivity
   }
 
   protected void requestCenterLayout() {
-    int maxWidth;
-    if (webView.canGoBack() || webView.canGoForward()) {
-      maxWidth = DisplayUtil.getWidth() - UnitConverter.dpToPx(48) * 4;
+    if (titleGravity != Gravity.NO_GRAVITY) {
+      title.setGravity(titleGravity);
+      urlTv.setGravity(titleGravity);
     } else {
-      maxWidth = DisplayUtil.getWidth() - UnitConverter.dpToPx(48) * 2;
-    }
+      int maxWidth;
+      if (webView.canGoBack() || webView.canGoForward()) {
+        maxWidth = DisplayUtil.getWidth() - UnitConverter.dpToPx(48) * 4;
+      } else {
+        maxWidth = DisplayUtil.getWidth() - UnitConverter.dpToPx(48) * 2;
+      }
 
-    title.setMaxWidth(maxWidth);
-    urlTv.setMaxWidth(maxWidth);
+      title.setMaxWidth(maxWidth);
+      urlTv.setMaxWidth(maxWidth);
+    }
     title.requestLayout();
     urlTv.requestLayout();
   }
@@ -1108,6 +1116,7 @@ public class FinestWebViewActivity extends AppCompatActivity
     }
   }
 
+  @SuppressLint("NewApi")
   @Override protected void onDestroy() {
     super.onDestroy();
     BroadCastManager.unregister(FinestWebViewActivity.this, key);
@@ -1190,7 +1199,9 @@ public class FinestWebViewActivity extends AppCompatActivity
       }
 
       if (injectJavaScript != null) {
-        webView.evaluateJavascript(injectJavaScript, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+          webView.evaluateJavascript(injectJavaScript, null);
+        }
       }
     }
 
