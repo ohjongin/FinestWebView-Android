@@ -1,5 +1,6 @@
 package com.thefinestartist.finestwebview.sample;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
           .injectJavaScript("javascript: document.getElementById('msg').innerHTML='Hello "
               + "TheFinestArtist"
               + "!';")
+              .screenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
           .show("http://www.blessthisstuff.com");
     } else if (view.getId() == R.id.blueTheme) {
       new FinestWebView.Builder(this).theme(R.style.FinestWebViewTheme)

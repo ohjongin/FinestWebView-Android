@@ -2,6 +2,7 @@ package com.thefinestartist.finestwebview;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -145,6 +146,8 @@ public class FinestWebViewActivity extends AppCompatActivity
 
   protected boolean backPressToClose;
   protected int stringResCopiedToClipboard;
+
+  protected int screenOrientation;
 
   protected Boolean webViewSupportZoom;
   protected Boolean webViewMediaPlaybackRequiresUserGesture;
@@ -427,6 +430,7 @@ public class FinestWebViewActivity extends AppCompatActivity
     webViewOffscreenPreRaster = builder.webViewOffscreenPreRaster;
 
     injectJavaScript = builder.injectJavaScript;
+    screenOrientation = builder.screenOrientation != null ? builder.screenOrientation : ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
     mimeType = builder.mimeType;
     encoding = builder.encoding;
@@ -878,6 +882,10 @@ public class FinestWebViewActivity extends AppCompatActivity
       menuOpenWithTv.setTypeface(TypefaceHelper.get(this, menuTextFont));
       menuOpenWithTv.setTextColor(menuTextColor);
       menuOpenWithTv.setPadding((int) menuTextPaddingLeft, 0, (int) menuTextPaddingRight, 0);
+    }
+
+    if (screenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+      setRequestedOrientation (screenOrientation);
     }
   }
 

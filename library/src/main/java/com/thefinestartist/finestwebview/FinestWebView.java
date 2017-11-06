@@ -167,6 +167,8 @@ public class FinestWebView {
     protected String data;
     protected String url;
 
+    protected Integer screenOrientation;
+
     public Builder(@NonNull Activity activity) {
       this.context = activity;
       Base.initialize(activity);
@@ -897,6 +899,11 @@ public class FinestWebView {
 
     public Builder injectJavaScript(String injectJavaScript) {
       this.injectJavaScript = injectJavaScript;
+      return this;
+    }
+
+    public Builder screenOrientation(int screenOrientation) {
+      this.screenOrientation = screenOrientation;
       return this;
     }
 
